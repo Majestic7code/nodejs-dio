@@ -109,17 +109,22 @@ async function playRaceEngine( character1, character2) {
         character2.PODER
         );
 
-        character2.PONTOS -= powerResult1 > powerResult2 && character2 > 0 ? 1 : 0;
-
-            
-        if(powerResult2 > powerResult1){
-            if(powerResult1.PONTOS > 0){
-                character1.PONTOS--
-            }
+        // if combinado com logica
+        if (powerResult1 > powerResult2 && character2.PONTOS > 0) {
+            console.log(`${character1.NOME} venceu o confronto! ${character2.NOME} Perdeu 1 ponto!`)
+            character2.PONTOS--;
+        }
+        if (powerResult2 > powerResult1 && character1.PONTOS > 0) {
+            console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} Perdeu 1 ponto!`)
+            character1.PONTOS--;
         }
 
+        // if ternario
+        //character1.PONTOS -= powerResult2 > powerResult1 && powerResult1 > 0 ? 1 : 0;
+
+        // If "normal"
         if (powerResult2 === powerResult1){
-            console.log("Confront empatado! ")
+            console.log("Confronto empatado! Nenhum ponto foi perdido.")
         }
         
      }
@@ -139,6 +144,20 @@ async function playRaceEngine( character1, character2) {
     }
 
 }
+
+ async function declareWinner(character1,character2) {
+    console.log('resultado final:')
+    console.log(`${character1.NOME} : ${character1.PONTOS} pontos(s)`)
+    console.log(`${character2.NOME} : ${character2.PONTOS} pontos(s)`)
+    
+    if(character1.PONTOS > character2.PONTOS) {
+        console.log(`\n${character1.NOME} venceu a corrida! Parabéns!`)
+    } else if(character2.PONTOS > character1.PONTOS){
+     console.log(`\n${character2.NOME} venceu a corrida! Parabéns!`)
+    } else {
+        console.log(" A corrida terminou em empate.")
+    }
+ }
 // primeira função indicando os jogadores
 (async function main() {
     console.log(
@@ -146,6 +165,7 @@ async function playRaceEngine( character1, character2) {
     );
     
     await playRaceEngine(player1,player2);
+    await declareWinner(player1, player2);
 })();
 
  
